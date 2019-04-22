@@ -217,6 +217,72 @@ void Adafruit_GFX::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
     }
 }
 
+
+/**************************************************************************/
+/*!
+   @brief   Draw a Trapezoid with no fill color
+    @param    x0   Top corner x coordinate
+    @param    y0   Top corner y coordinate
+    @param    tw   Top Width in pixels
+    @param    bw   Bottom Width in pixels
+    @param    h    Height in pixels
+    @param    color 16-bit 5-6-5 Color to draw with
+*/
+/**************************************************************************/
+void Adafruit_GFX::drawTrapezoid(int16_t x0, int16_t y0, int16_t tw, int16_t bw, 
+     int16_t h, uint16_t color){
+         int16_t x1 = x0 + tw;
+         int16_t y1 = y0;
+
+         int16_t x = (bw - tw) / 2;
+
+         int16_t x2 = x0 - x;
+         int16_t y2 = y0 + h;
+         int16_t x3 = x1 + x;
+         int16_t y3 = y0 + h;
+
+         startWrite();
+         drawLine(x0, y0, x1, y1, color);
+         drawLine(x1, y1, x2, y2, color);
+         drawLine(x2, y2, x3, y3, color);
+         drawLine(x3, y3, x0, y0, color);
+
+         endWrite();
+     }
+
+/**************************************************************************/
+/*!
+   @brief   Draw a triangle with no fill color
+    @param    x0   center point  x coordinate
+    @param    y0   center point  y coordinate
+    @param    a    Width of every edge in pixels
+    @param    color 16-bit 5-6-5 Color to draw with
+*/
+/**************************************************************************/
+
+void Adafruit_GFX::drawTriangle2(int16_t x0, int16_t y0, int16_t a,
+    uint16_t color){
+    
+    int16_t x = a * 1.7 / 2;
+    int16_t x1 = x0;
+    int16_t y1 = y0 - x / 3 * 2;
+    
+
+    int16_t x2 = x1 + a / 2;
+    int16_t y2 = y0 + x / 3;
+    int16_t x3 = x0 - a / 2;
+    int16_t y3 = y2;
+
+    startWrite();
+    drawLine(x1, y1, x2, y2, color);
+    drawLine(x2, y2, x3, y3, color);
+    drawLine(x3, y3, x1, y1, color);
+
+    
+    endWrite();
+}
+
+
 // Draw a circle outline
 void Adafruit_GFX::drawCircle(int16_t x0, int16_t y0, int16_t r,
         uint16_t color) {
